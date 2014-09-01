@@ -86,6 +86,13 @@
     isInline = NO;
 
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
+
+    if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes] == 0)
+    {
+        //user has probably disabled push.
+        NSError* error = nil;
+        [self failWithMessage:@"Push notifications disabled" withError:error];
+    }
 	
 	if (notificationMessage)			// if there is a pending startup notification
 		[self notificationReceived];	// go ahead and process it
